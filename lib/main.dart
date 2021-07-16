@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:first_project/display_summoner_info.dart';
 import 'package:first_project/registration_screen.dart';
-import 'package:first_project/weather_screen.dart';
+import 'package:first_project/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'registration_screen.dart';
 import 'components/rounded_button.dart';
 import 'login_screen.dart';
-import 'weather_screen.dart';
+import 'main_screen.dart';
 import 'add_location.dart';
 
 void main() async {
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => LoginScreen(),
         RegistrationScreen.id: (context) => RegistrationScreen(),
-        WeatherScreen.id: (context) => WeatherScreen(),
+        MainScreen.id: (context) => MainScreen(),
         AddLocation.id: (context) => AddLocation(),
       },
     );

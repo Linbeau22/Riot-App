@@ -1,4 +1,4 @@
-import 'package:first_project/weather_screen.dart';
+import 'package:first_project/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'constants.dart';
 import 'components/rounded_button.dart';
@@ -75,7 +75,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   bool shouldNavigate =
                       await register(_emailField.text, _passwordField.text);
                   if (shouldNavigate) {
-                    Navigator.pushNamed(context, WeatherScreen.id);
+                    Navigator.pushNamed(context, MainScreen.id);
                   }
 
                   setState(() {

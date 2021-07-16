@@ -1,11 +1,13 @@
+import 'package:first_project/network/networking.dart';
 import 'package:first_project/registration_screen.dart';
-import 'package:first_project/weather_screen.dart';
+import 'package:first_project/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'components/rounded_button.dart';
 import 'constants.dart';
 import 'network/flutterfire.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'network/api.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -32,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
               // mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 TextLiquidFill(
-                  text: 'Weather App',
+                  text: 'Riot app',
                   waveColor: Colors.blueAccent,
                   boxBackgroundColor: Colors.redAccent,
                   textStyle: TextStyle(
@@ -81,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     bool shouldNavigate =
                         await signIn(_emailField.text, _passwordField.text);
                     if (shouldNavigate) {
-                      Navigator.pushNamed(context, WeatherScreen.id);
+                      Navigator.pushNamed(context, MainScreen.id);
                     }
                     setState(() {
                       showSpinner = false;
