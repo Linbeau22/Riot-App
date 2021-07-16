@@ -85,7 +85,7 @@ class _MainScreenState extends State<MainScreen> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => DisplaySummonerInfo(
-                            summonerName: 'Kitchen Counter'),
+                            summonerName: _summonerField.text),
                       ),
                     );
 

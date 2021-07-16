@@ -54,6 +54,11 @@ class _DisplaySummonerInfoState extends State<DisplaySummonerInfo> {
     return rankData[0]['rank'];
   }
 
+  Future<dynamic> getWholeRank(summonerName) async {
+    var rankData = await rankObj.fetchRank(summonerName);
+    return rankData;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -61,17 +66,18 @@ class _DisplaySummonerInfoState extends State<DisplaySummonerInfo> {
 
   @override
   Widget build(BuildContext context) {
-    updateTier(widget.summonerName);
-    updateRank(widget.summonerName);
+    // updateTier(widget.summonerName);
+    // updateRank(widget.summonerName);
     return Scaffold(
       body: Container(
         child: Card(
-          child: FutureBuilder<String>(
-            future: getTier(widget.summonerName),
+          child: FutureBuilder<dynamic>(
+            future: getWholeRank(widget.summonerName),
             builder: (context, snapshot) {
               String tier;
               if (snapshot.hasData) {
-                tier = snapshot.data!;
+                tier = snapshot.data![0]['tier'];
+                rank = snapshot.data![0]['rank'];
               } else {
                 return CircularProgressIndicator();
               }
