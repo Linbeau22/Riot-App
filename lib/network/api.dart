@@ -2,7 +2,7 @@ import 'dart:core';
 import 'networking.dart';
 import 'package:flutter/material.dart';
 
-const api_key = 'RGAPI-27dc7545-289c-49ea-871c-490f29e62894';
+const api_key = 'RGAPI-ce823880-9279-404a-b203-5d361a966249';
 
 String removeSpaces(String name) {
   for (int i = 0; i < name.length; i++) {

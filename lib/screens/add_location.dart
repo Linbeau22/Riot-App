@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'network/flutterfire.dart';
+import '../network/flutterfire.dart';
 
 class AddLocation extends StatefulWidget {
   const AddLocation({Key? key}) : super(key: key);

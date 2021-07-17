@@ -1,13 +1,11 @@
-import 'package:first_project/network/networking.dart';
-import 'package:first_project/registration_screen.dart';
-import 'package:first_project/main_screen.dart';
+import 'package:first_project/screens/main_screen.dart';
+import 'package:first_project/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
-import 'components/rounded_button.dart';
-import 'constants.dart';
-import 'network/flutterfire.dart';
+import '../components/rounded_button.dart';
+import '../components/constants.dart';
+import '../network/flutterfire.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'network/api.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -31,7 +29,6 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Center(
           child: Expanded(
             child: ListView(
-              // mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 TextLiquidFill(
                   text: 'Riot app',

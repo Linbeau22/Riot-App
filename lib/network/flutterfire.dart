@@ -42,7 +42,7 @@ Future<bool> addAmount(String id, String amount) async {
             'Users') //This is the area that creates the stuff on Firebase
         .doc(uid)
         .collection('Coins')
-        .doc(id);
+        .doc(id); //id is Dallas
     FirebaseFirestore.instance.runTransaction((transaction) async {
       DocumentSnapshot snapshot = await transaction.get(documentReference);
       if (!snapshot.exists) {
@@ -58,3 +58,7 @@ Future<bool> addAmount(String id, String amount) async {
     return false;
   }
 }
+
+// Future updateSummonerName(String summonerName) async {
+//   return await FirebaseFirestore.instance.collection('users').doc(uid)
+// }

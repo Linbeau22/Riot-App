@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'network/api.dart';
+import '../network/api.dart';
 
 class DisplaySummonerInfo extends StatefulWidget {
   final summonerName;
@@ -16,15 +16,6 @@ class _DisplaySummonerInfoState extends State<DisplaySummonerInfo> {
   String rank = 'NaN';
   var rankData;
   DataModel rankObj = DataModel();
-
-  // void updateUI(dynamic rankData) {
-  //   setState(() {
-  //     if (rankData == null) {
-  //       tier = 'NaN';
-  //     }
-  //     tier = rankData[0]['tier'];
-  //   });
-  // }
 
   void updateTier(summonerName) async {
     setState(() async {
@@ -66,32 +57,48 @@ class _DisplaySummonerInfoState extends State<DisplaySummonerInfo> {
 
   @override
   Widget build(BuildContext context) {
-    // updateTier(widget.summonerName);
-    // updateRank(widget.summonerName);
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+          FloatingActionButton(
+            onPressed: () => Navigator.pop(context),
+          ),
+        ],
+      ),
       body: Container(
         child: Card(
           child: FutureBuilder<dynamic>(
             future: getWholeRank(widget.summonerName),
             builder: (context, snapshot) {
               String tier;
-              if (snapshot.hasData) {
-                tier = snapshot.data![0]['tier'];
-                rank = snapshot.data![0]['rank'];
-              } else {
-                return CircularProgressIndicator();
+              try {
+                //if successful, the player is ranked and has data
+                if (snapshot.hasData) {
+                  tier = snapshot.data![0]['tier'];
+                  rank = snapshot.data![0]['rank'];
+                } else {
+                  return CircularProgressIndicator();
+                }
+                if (tier == 'CHALLENGER' || tier == 'MASTER') {
+                  rank = '';
+                }
+                return Center(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(tier),
+                      SizedBox(width: 2.0),
+                      Text(rank),
+                    ],
+                  ),
+                );
+              } catch (e) {
+                //if unsuccessful call from api, means the player is unranked and json is empty
+                return Center(
+                  child: Text('Unranked'),
+                );
               }
-              return Center(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(tier),
-                    SizedBox(width: 2.0),
-                    Text(rank),
-                  ],
-                ),
-              );
             },
           ),
         ),

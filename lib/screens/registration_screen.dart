@@ -1,10 +1,8 @@
-import 'package:first_project/main_screen.dart';
+import 'package:first_project/screens/set_summoner_name.dart';
 import 'package:flutter/material.dart';
-import 'constants.dart';
-import 'components/rounded_button.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'network/flutterfire.dart';
+import '../components/constants.dart';
+import '../components/rounded_button.dart';
+import '../network/flutterfire.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 //Register:
 // - email
@@ -75,7 +73,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   bool shouldNavigate =
                       await register(_emailField.text, _passwordField.text);
                   if (shouldNavigate) {
-                    Navigator.pushNamed(context, MainScreen.id);
+                    Navigator.pushNamed(context, SetSummonerName.id);
                   }
 
                   setState(() {
