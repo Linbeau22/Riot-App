@@ -1,8 +1,7 @@
 import 'dart:core';
 import 'networking.dart';
-import 'package:flutter/material.dart';
 
-const api_key = 'RGAPI-ce823880-9279-404a-b203-5d361a966249';
+const api_key = 'RGAPI-d8a47b44-d64e-4b9e-a265-8632bc381379';
 
 String removeSpaces(String name) {
   for (int i = 0; i < name.length; i++) {
@@ -31,6 +30,11 @@ class DataModel {
         'https://na1.api.riotgames.com/lol/league/v4/entries/by-summoner/$id?api_key=$api_key');
 
     var rankData = await networkHelper.getRankData();
+    return rankData;
+  }
+
+  Future<dynamic> getWholeRank(summonerName) async {
+    var rankData = await this.fetchRank(summonerName);
     return rankData;
   }
 }

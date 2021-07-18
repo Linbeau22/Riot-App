@@ -60,24 +60,25 @@ class _SetSummonerNameState extends State<SetSummonerName> {
         ],
       ),
       body: Center(
-          child: ListView(
-        children: <Widget>[
-          TextFormField(
-            controller: _summonerField,
-            textAlign: TextAlign.center,
-            decoration:
-                kTextFieldDecoration.copyWith(hintText: 'Summoner name'),
-          ),
-          SizedBox(height: 10.0),
-          RoundedButton(
-              label: 'Submit',
-              onPressed: () async {
-                await updateSummonerName(_summonerField.text);
-                Navigator.pushNamed(context, MainScreen.id);
-              },
-              color: Colors.blueAccent),
-        ],
-      )),
+        child: ListView(
+          children: <Widget>[
+            TextFormField(
+              controller: _summonerField,
+              textAlign: TextAlign.center,
+              decoration:
+                  kTextFieldDecoration.copyWith(hintText: 'Summoner name'),
+            ),
+            SizedBox(height: 10.0),
+            RoundedButton(
+                label: 'Submit',
+                onPressed: () async {
+                  await updateSummonerName(_summonerField.text);
+                  Navigator.pushNamed(context, MainScreen.id);
+                },
+                color: Colors.blueAccent),
+          ],
+        ),
+      ),
     );
   }
 }

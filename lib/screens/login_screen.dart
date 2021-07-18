@@ -10,6 +10,8 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
 
+  static const id = '/';
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -23,81 +25,85 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.redAccent,
+      backgroundColor: Colors.purple.shade900,
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
         child: Center(
-          child: Expanded(
-            child: ListView(
-              children: <Widget>[
-                TextLiquidFill(
-                  text: 'Riot app',
-                  waveColor: Colors.blueAccent,
-                  boxBackgroundColor: Colors.redAccent,
-                  textStyle: TextStyle(
-                    color: Colors.white,
-                    fontSize: 50.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  boxHeight: 300.0,
+          child: ListView(
+            children: <Widget>[
+              TextLiquidFill(
+                text: 'Flutter.GG',
+                waveColor: Colors.orange.shade800,
+                boxBackgroundColor: Colors.purple.shade900,
+                textStyle: TextStyle(
+                  color: Colors.white,
+                  fontSize: 50.0,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Merienda',
                 ),
-                SizedBox(
-                  height: 15.0,
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 15.0),
-                  child: TextFormField(
+                boxHeight: 300.0,
+              ),
+              SizedBox(
+                height: 15.0,
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 15.0),
+                child: TextFormField(
                     textAlign: TextAlign.center,
                     keyboardType: TextInputType.emailAddress,
                     controller: _emailField,
                     decoration:
                         kTextFieldDecoration.copyWith(hintText: 'Email'),
+                    style: TextStyle(
+                      fontFamily: 'SourceCodePro',
+                    )),
+              ),
+              SizedBox(
+                height: 15.0,
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 15.0),
+                child: TextFormField(
+                  textAlign: TextAlign.center,
+                  obscureText: true,
+                  controller: _passwordField,
+                  decoration:
+                      kTextFieldDecoration.copyWith(hintText: 'Password'),
+                  style: TextStyle(
+                    fontFamily: 'SourceCodePro',
                   ),
                 ),
-                SizedBox(
-                  height: 15.0,
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 15.0),
-                  child: TextFormField(
-                    textAlign: TextAlign.center,
-                    obscureText: true,
-                    controller: _passwordField,
-                    decoration:
-                        kTextFieldDecoration.copyWith(hintText: 'Password'),
-                  ),
-                ),
-                SizedBox(
-                  height: 15.0,
-                ),
-                RoundedButton(
-                  label: 'Log In',
-                  color: Colors.blueAccent,
-                  onPressed: () async {
-                    setState(() {
-                      showSpinner = true;
-                    });
-                    bool shouldNavigate =
-                        await signIn(_emailField.text, _passwordField.text);
-                    if (shouldNavigate) {
-                      Navigator.pushNamed(context, MainScreen.id);
-                    }
-                    setState(() {
-                      showSpinner = false;
-                    });
-                  },
-                ),
-                SizedBox(
-                  height: 15.0,
-                ),
-                RoundedButton(
-                  color: Colors.blueAccent,
-                  label: 'New? Register here!',
-                  onPressed: () =>
-                      Navigator.pushNamed(context, RegistrationScreen.id),
-                ),
-              ],
-            ),
+              ),
+              SizedBox(
+                height: 15.0,
+              ),
+              RoundedButton(
+                label: 'Log In',
+                color: Colors.blueAccent,
+                onPressed: () async {
+                  setState(() {
+                    showSpinner = true;
+                  });
+                  bool shouldNavigate =
+                      await signIn(_emailField.text, _passwordField.text);
+                  if (shouldNavigate) {
+                    Navigator.pushNamed(context, MainScreen.id);
+                  }
+                  setState(() {
+                    showSpinner = false;
+                  });
+                },
+              ),
+              SizedBox(
+                height: 15.0,
+              ),
+              RoundedButton(
+                color: Colors.blueAccent,
+                label: 'New? Register here!',
+                onPressed: () =>
+                    Navigator.pushNamed(context, RegistrationScreen.id),
+              ),
+            ],
           ),
         ),
       ),

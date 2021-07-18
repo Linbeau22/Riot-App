@@ -45,11 +45,6 @@ class _DisplaySummonerInfoState extends State<DisplaySummonerInfo> {
     return rankData[0]['rank'];
   }
 
-  Future<dynamic> getWholeRank(summonerName) async {
-    var rankData = await rankObj.fetchRank(summonerName);
-    return rankData;
-  }
-
   @override
   void initState() {
     super.initState();
@@ -68,7 +63,7 @@ class _DisplaySummonerInfoState extends State<DisplaySummonerInfo> {
       body: Container(
         child: Card(
           child: FutureBuilder<dynamic>(
-            future: getWholeRank(widget.summonerName),
+            future: DataModel().getWholeRank(widget.summonerName),
             builder: (context, snapshot) {
               String tier;
               try {

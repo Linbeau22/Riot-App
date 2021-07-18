@@ -20,7 +20,12 @@ class RoundedButton extends StatelessWidget {
       ),
       child: MaterialButton(
         onPressed: onPressed,
-        child: Text(label),
+        child: Text(
+          label,
+          style: TextStyle(
+            fontFamily: 'SourceCodePro',
+          ),
+        ),
       ),
     );
   }

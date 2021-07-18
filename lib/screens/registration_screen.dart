@@ -66,13 +66,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 color: Colors.blueGrey,
                 onPressed: () async {
                   setState(() {
+                    print('Got here1');
                     showSpinner =
                         true; //turning loading spinner on while data is retrieved
                   });
+                  print('Got here2');
 
                   bool shouldNavigate =
                       await register(_emailField.text, _passwordField.text);
                   if (shouldNavigate) {
+                    print('Got here3');
                     Navigator.pushNamed(context, SetSummonerName.id);
                   }
 
