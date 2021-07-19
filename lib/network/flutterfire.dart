@@ -15,11 +15,9 @@ Future<bool> signIn(String email, String password) async {
 
 Future<bool> register(String email, String password) async {
   try {
-    print('yeti1');
     await FirebaseAuth
         .instance //try to create a user with given email and password
         .createUserWithEmailAndPassword(email: email, password: password);
-    print('yeti2');
     return true;
   } on FirebaseAuthException catch (e) {
     if (e.code == 'weak-password') {

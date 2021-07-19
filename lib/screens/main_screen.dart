@@ -4,6 +4,7 @@ import 'package:first_project/network/api.dart';
 import 'package:first_project/screens/summoner_search.dart';
 import 'package:flutter/material.dart';
 import 'login_screen.dart';
+import 'package:first_project/network/api.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -39,10 +40,8 @@ class _MainScreenState extends State<MainScreen> {
     } else if (tier == 'BRONZE') {
       return Color(0xffcdf732);
     } else if (tier == 'SILVER') {
-      print('silver');
       return Color(0xffc0c0c0);
     } else if (tier == 'GOLD') {
-      print('gold');
       return Color(0xfff9c00c);
     } else if (tier == 'PLATINUM') {
       return Color(0xffe5e4e2);
@@ -101,7 +100,6 @@ class _MainScreenState extends State<MainScreen> {
                   child: CircularProgressIndicator(),
                 );
               }
-              print('Reached Here!');
               print(snapshot.data!.docs[0].data().toString());
 
               return ListView(
@@ -120,8 +118,8 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                       Card(
                         child: FutureBuilder<dynamic>(
-                          future: DataModel()
-                              .getWholeRank(document['summonerName']),
+                          future:
+                              DataModel().fetchRank(document['summonerName']),
                           builder: (context, snapshot) {
                             String tier;
                             String rank;
@@ -133,7 +131,9 @@ class _MainScreenState extends State<MainScreen> {
                               } else {
                                 return CircularProgressIndicator();
                               }
-                              if (tier == 'CHALLENGER' || tier == 'MASTER') {
+                              if (tier == 'CHALLENGER' ||
+                                  tier == 'MASTER' ||
+                                  tier == 'GRANDMASTER') {
                                 rank = '';
                               }
                               String tierRank = tier + ' ' + rank;
@@ -156,6 +156,53 @@ class _MainScreenState extends State<MainScreen> {
                           },
                         ),
                       ),
+                      Card(
+                        child: FutureBuilder<dynamic>(
+                          future: DataModel().fetchTopMasteryChampion(
+                              document['summonerName']),
+                          builder: (context, snapshot) {
+                            String champID;
+                            String champLevel;
+                            String champMasteryPoints;
+                            String champName;
+                            try {
+                              if (snapshot.hasData) {
+                                champID =
+                                    snapshot.data![0]['championId'].toString();
+                                champLevel = snapshot.data![0]['championLevel']
+                                    .toString();
+                                champMasteryPoints = snapshot.data![0]
+                                        ['championPoints']
+                                    .toString();
+                                print(champID);
+                                print(champMasteryPoints);
+                              } else {
+                                return CircularProgressIndicator();
+                              }
+                              return Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Container(
+                                    child: ChampionName(champID: champID),
+                                  ),
+                                  Container(
+                                    child: Text(
+                                      champLevel,
+                                      style: TextStyle(
+                                        fontFamily: 'SourceCodePro',
+                                        fontSize: 30,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            } catch (e) {
+                              print(e);
+                              return Placeholder();
+                            }
+                          },
+                        ),
+                      ),
                     ],
                   );
                 }).toList(),
@@ -168,10 +215,37 @@ class _MainScreenState extends State<MainScreen> {
   }
 }
 
-// checkIfSummonerExists(AsyncSnapshot<QuerySnapshot> snapshot) {
-//   return snapshot.data!.docs.map((docs) {
-//     if (docs['summonerName'] == null) {
-//       Navigator.pushNamed(context, SetSummonerName.id);
-//     }
-//   });
-// }
+class ChampionName extends StatefulWidget {
+  String champID;
+
+  ChampionName({required this.champID});
+
+  @override
+  _ChampionNameState createState() => _ChampionNameState();
+}
+
+class _ChampionNameState extends State<ChampionName> {
+  String champName = '';
+
+  @override
+  void initState() {
+    DataModel().fetchChampionNameByID(widget.champID).then((val) {
+      setState(() {
+        champName = val;
+      });
+    });
+    // print('Champ:');
+    // print(champName);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      champName,
+      style: TextStyle(
+        fontFamily: 'SourceCodePro',
+      ),
+    );
+  }
+}

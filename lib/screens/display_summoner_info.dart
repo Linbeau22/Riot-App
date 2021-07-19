@@ -63,7 +63,7 @@ class _DisplaySummonerInfoState extends State<DisplaySummonerInfo> {
       body: Container(
         child: Card(
           child: FutureBuilder<dynamic>(
-            future: DataModel().getWholeRank(widget.summonerName),
+            future: DataModel().fetchRank(widget.summonerName),
             builder: (context, snapshot) {
               String tier;
               try {

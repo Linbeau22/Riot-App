@@ -45,4 +45,17 @@ class NetworkHelper {
           .statusCode); //if doesn't work, it will print status code (200 is good, 400 etc. is bad)
     }
   }
+
+  Future getTopMasteryChampionData() async {
+    http.Response response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      String data = response.body;
+
+      var decodedData = jsonDecode(data);
+      return decodedData;
+    } else {
+      print('Failed! Status code: ');
+      print(response.statusCode);
+    }
+  }
 }
