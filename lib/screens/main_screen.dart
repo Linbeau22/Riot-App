@@ -162,35 +162,72 @@ class _MainScreenState extends State<MainScreen> {
                               document['summonerName']),
                           builder: (context, snapshot) {
                             String champID;
-                            String champLevel;
+                            String champMasteryLevel;
                             String champMasteryPoints;
-                            String champName;
+                            String masteryIcon;
+                            int champMasteryLevelInt;
                             try {
                               if (snapshot.hasData) {
                                 champID =
                                     snapshot.data![0]['championId'].toString();
-                                champLevel = snapshot.data![0]['championLevel']
+                                champMasteryLevel = snapshot.data![0]
+                                        ['championLevel']
                                     .toString();
                                 champMasteryPoints = snapshot.data![0]
                                         ['championPoints']
                                     .toString();
-                                print(champID);
-                                print(champMasteryPoints);
+                                champMasteryLevelInt =
+                                    int.parse(champMasteryLevel);
+
+                                // masteryIcon =
+                                // 'Champion_Mastery_Level_${champMasteryLevel}_Flair.png';
                               } else {
                                 return CircularProgressIndicator();
                               }
                               return Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  Container(
+                                  Card(
                                     child: ChampionName(champID: champID),
                                   ),
-                                  Container(
-                                    child: Text(
-                                      champLevel,
-                                      style: TextStyle(
-                                        fontFamily: 'SourceCodePro',
-                                        fontSize: 30,
+                                  SizedBox(height: 10),
+                                  FutureBuilder(
+                                    future: DataModel()
+                                        .fetchChampionNameByID(champID),
+                                    builder: (context, snapshot) {
+                                      String champName;
+                                      if (snapshot.hasData) {
+                                        champName = snapshot.data.toString();
+                                        champName = champName.toLowerCase();
+                                      } else {
+                                        return CircularProgressIndicator();
+                                      }
+                                      return Container(
+                                        width: 100,
+                                        height: 100,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                                'images/champ_splashes/${champName}_splash.jpg'),
+                                            fit: BoxFit.fill,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  SizedBox(height: 10),
+                                  Card(
+                                    child: Container(
+                                      width: 75,
+                                      height: 75,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                          image: AssetImage(
+                                              'images/mastery_icons/Champion_Mastery_Level_${champMasteryLevelInt}_Flair.png'),
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -200,6 +237,48 @@ class _MainScreenState extends State<MainScreen> {
                               print(e);
                               return Placeholder();
                             }
+                          },
+                        ),
+                      ),
+                      Card(
+                        child: FutureBuilder(
+                          future: DataModel().fetchHighestChampionWinrate(
+                              document['summonerName'], 420),
+                          builder: (context, snapshot) {
+                            Map championWithHighestWinrateMap = {};
+                            String championWithHighestWinrateName = '';
+                            double winrate = 0;
+                            if (snapshot.hasData) {
+                              //Error: apparently snapshot doesn't have data right now, but functions are working
+                              championWithHighestWinrateMap =
+                                  snapshot.data as Map;
+                              print('yello');
+                              championWithHighestWinrateMap
+                                  .forEach((key, value) {
+                                championWithHighestWinrateName = key;
+                                winrate = value;
+                                print(key);
+                                print(value);
+                              });
+                            } else {
+                              print('no data');
+                              return CircularProgressIndicator();
+                            }
+                            return Container(
+                              child: Column(
+                                children: <Widget>[
+                                  Text(
+                                    championWithHighestWinrateName,
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    winrate.toString(),
+                                  ),
+                                ],
+                              ),
+                            );
                           },
                         ),
                       ),
@@ -216,7 +295,7 @@ class _MainScreenState extends State<MainScreen> {
 }
 
 class ChampionName extends StatefulWidget {
-  String champID;
+  final String champID;
 
   ChampionName({required this.champID});
 
@@ -227,15 +306,17 @@ class ChampionName extends StatefulWidget {
 class _ChampionNameState extends State<ChampionName> {
   String champName = '';
 
+  Future<String> fetchChampName(String champID) async {
+    return await DataModel().fetchChampionNameByID(champID);
+  }
+
   @override
   void initState() {
-    DataModel().fetchChampionNameByID(widget.champID).then((val) {
+    fetchChampName(widget.champID).then((val) {
       setState(() {
         champName = val;
       });
     });
-    // print('Champ:');
-    // print(champName);
     super.initState();
   }
 
