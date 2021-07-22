@@ -15,3 +15,9 @@ const kTextFieldDecoration = InputDecoration(
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
 );
+
+const kDefaultTextStyle = TextStyle(
+  fontFamily: 'SourceCodePro',
+  fontWeight: FontWeight.w600,
+  fontSize: 30,
+);

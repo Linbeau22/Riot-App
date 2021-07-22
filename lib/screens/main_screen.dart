@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:first_project/components/constants.dart';
 import 'package:first_project/network/api.dart';
 import 'package:first_project/screens/summoner_search.dart';
 import 'package:flutter/material.dart';
@@ -65,9 +66,19 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(fontFamily: 'SourceCodePro'),
       home: Scaffold(
+        backgroundColor: Colors.purple.shade900,
         appBar: AppBar(
-          title: Text('Main Screen'),
+          backgroundColor: Colors.yellow.shade700,
+          title: Text(
+            'Flutter.gg',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'FrizQuadrata',
+            ),
+          ),
           actions: [
             IconButton(
               onPressed: () => Navigator.pushNamed(context, SummonerSearch.id),
@@ -110,13 +121,10 @@ class _MainScreenState extends State<MainScreen> {
                       ListTile(
                         title: Text(
                           document['summonerName'],
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style: kDefaultTextStyle,
                         ),
                       ),
-                      Card(
+                      Container(
                         child: FutureBuilder<dynamic>(
                           future:
                               DataModel().fetchRank(document['summonerName']),
@@ -140,11 +148,8 @@ class _MainScreenState extends State<MainScreen> {
                               return Center(
                                 child: Text(
                                   tierRank,
-                                  style: TextStyle(
-                                    color: rankTextColor(tier),
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 50,
-                                  ),
+                                  style: kDefaultTextStyle.copyWith(
+                                      color: rankTextColor(tier)),
                                 ),
                               );
                             } catch (e) {
@@ -156,7 +161,7 @@ class _MainScreenState extends State<MainScreen> {
                           },
                         ),
                       ),
-                      Card(
+                      Container(
                         child: FutureBuilder<dynamic>(
                           future: DataModel().fetchTopMasteryChampion(
                               document['summonerName']),
@@ -187,7 +192,7 @@ class _MainScreenState extends State<MainScreen> {
                               return Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  Card(
+                                  Container(
                                     child: ChampionName(champID: champID),
                                   ),
                                   SizedBox(height: 10),
@@ -217,7 +222,7 @@ class _MainScreenState extends State<MainScreen> {
                                     },
                                   ),
                                   SizedBox(height: 10),
-                                  Card(
+                                  Container(
                                     child: Container(
                                       width: 75,
                                       height: 75,
@@ -240,7 +245,7 @@ class _MainScreenState extends State<MainScreen> {
                           },
                         ),
                       ),
-                      Card(
+                      Container(
                         child: FutureBuilder(
                           future: DataModel().fetchHighestChampionWinrate(
                               document['summonerName'], 420),
@@ -249,10 +254,8 @@ class _MainScreenState extends State<MainScreen> {
                             String championWithHighestWinrateName = '';
                             double winrate = 0;
                             if (snapshot.hasData) {
-                              //Error: apparently snapshot doesn't have data right now, but functions are working
                               championWithHighestWinrateMap =
                                   snapshot.data as Map;
-                              print('yello');
                               championWithHighestWinrateMap
                                   .forEach((key, value) {
                                 championWithHighestWinrateName = key;
@@ -266,15 +269,30 @@ class _MainScreenState extends State<MainScreen> {
                             }
                             return Container(
                               child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                   Text(
-                                    championWithHighestWinrateName,
+                                    'Highest Champion Win Percentage in Ranked: ',
+                                    style: kDefaultTextStyle.copyWith(
+                                        fontSize: 12),
                                   ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    winrate.toString(),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text(
+                                        championWithHighestWinrateName,
+                                        style: kDefaultTextStyle.copyWith(
+                                            fontSize: 12),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        (winrate * 100).toString() + '%',
+                                        style: kDefaultTextStyle.copyWith(
+                                            fontSize: 12),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),

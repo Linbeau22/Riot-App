@@ -4,7 +4,7 @@ import 'networking.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-const api_key = 'RGAPI-59d0f5d3-76c5-4d39-b8fc-987a1e090356';
+const api_key = 'RGAPI-c2e06511-0b1d-406c-8f63-a8d80ed9bf46';
 
 String removeSpaces(String name) {
   for (int i = 0; i < name.length; i++) {

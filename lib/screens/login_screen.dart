@@ -32,20 +32,27 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Center(
           child: ListView(
             children: <Widget>[
-              TextLiquidFill(
-                text: 'Flutter.GG',
-                waveColor: Colors.orange.shade800,
-                boxBackgroundColor: Colors.purple.shade900,
-                textStyle: TextStyle(
-                  color: Colors.white,
-                  fontSize: 50.0,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Merienda',
+              SizedBox(height: 100),
+              Center(
+                child: DefaultTextStyle(
+                  style: TextStyle(
+                    color: Colors.yellow.shade700,
+                    fontSize: 50.0,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'FrizQuadrata',
+                  ),
+                  child: AnimatedTextKit(
+                    animatedTexts: [
+                      TypewriterAnimatedText('Flutter.gg',
+                          speed: Duration(milliseconds: 300)),
+                      TypewriterAnimatedText('By: Beau Lin',
+                          speed: Duration(milliseconds: 300)),
+                    ],
+                  ),
                 ),
-                boxHeight: 300.0,
               ),
               SizedBox(
-                height: 15.0,
+                height: 200,
               ),
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 15.0),
